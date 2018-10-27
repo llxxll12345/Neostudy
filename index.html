@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+
+</head>
+<body>
+<form action="http://127.0.0.1:8081/post_user" method="POST">
+    First Name: <input type="text" name="first_name">
+    Last  Name: <input type="text" name="last_name">
+    <input type="submit" value="Submit">
+</form>
+<form action="/file_upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" size="50" />
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
