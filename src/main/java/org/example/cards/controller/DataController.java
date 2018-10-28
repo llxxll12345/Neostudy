@@ -23,7 +23,6 @@ public class DataController {
         return "Saved";
     }
 
-    @RequestMapping(path="/")
     public @ResponseBody String getDefault() {
         return "User system";
     }

@@ -1,6 +1,5 @@
 package org.example.cards.model;
 
-import sun.util.resources.Bundles;
 
 import javax.persistence.*;
 
@@ -29,6 +28,10 @@ public class Card {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public void setLink(String link) {
         this.link = link;
     }
@@ -39,6 +42,14 @@ public class Card {
 
     public String getLink() {
         return link;
+    }
+
+    public String getTranslation() {
+        return translation;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setTranslation(String translation) {
