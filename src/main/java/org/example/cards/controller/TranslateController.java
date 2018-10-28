@@ -1,6 +1,6 @@
 package org.example.cards.controller;
 
-import org.example.cards.utils.Translator;
+import org.example.cards.utils.MyTranslator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +14,13 @@ public class TranslateController {
     public String traslateHandle(@RequestParam String text, @RequestParam String from,
                                @RequestParam String to) {
         /*/getTrans?text=apple&from=en&ru=to*/
-        String result = Translator.translate(text, from, to);
-        System.out.println(result);
-        return result;
+        try {
+            String result = MyTranslator.translate(text, from, to);
+            System.out.println(result);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
