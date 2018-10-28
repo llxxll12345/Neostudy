@@ -1,5 +1,10 @@
 package org.example.cards.controller;
 
+import org.example.cards.config.GlobalConfig;
+import org.example.cards.data.CardRepository;
+import org.example.cards.model.Card;
+import org.example.cards.utils.MyTranslator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,32 +21,49 @@ import org.yaml.snakeyaml.util.ArrayUtils;
 
 @Controller
 public class DetectorController {
+    @Autowired
+    private CardRepository cardRepository;
+
+    final String base = "/Users/charlieliu/Documents/codes/springserver/src/main/";
+
     @CrossOrigin
     @PostMapping(path = "/detector")
     @ResponseBody
-    public List<String> heandleDetectFileUpload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity heandleDetectFileUpload(@RequestParam("file") MultipartFile file) {
         ArrayList<String> results = new ArrayList<>();
         try {
             System.out.println("Detect name: " + file.getOriginalFilename() +
                     "Size: " + file.getSize());
-            String location = "/Users/charlieliu/Documents/codes/springserver/src/main/resources/img/" + file.getOriginalFilename();
+            String location = base + "resources/img/" + file.getOriginalFilename();
             File fileToSave = new File(location);
-            file.transferTo(fileToSave);
             try {
+                file.transferTo(fileToSave);
                 results = Detector.detectLabels(location, System.out);
-                for (String s : results) {
-                    System.out.println(s);
-                }
             } catch (Exception e) {
                 e.printStackTrace();
+                return ResponseEntity.
+                        status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
-        } catch (IOException e) {
+            for (String s : results) {
+                System.out.println(s);
+            }
+            String text = results.get(0);
+            try {
+                String texts = MyTranslator.translate(text, GlobalConfig.getFrom(), GlobalConfig.getTo());
+                cardRepository.save(new Card(text, texts, file.getOriginalFilename()));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.
+                        status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+            return ResponseEntity.
+                    status(HttpStatus.OK).build();
+        } catch (Exception e) {
             e.printStackTrace();
             results.clear();
-            results.add(ResponseEntity.
-                    status(HttpStatus.INTERNAL_SERVER_ERROR).build().toString());
+            return ResponseEntity.
+                    status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        results.add(ResponseEntity.status(HttpStatus.OK).build().toString());
-        return results;
     }
+
 }

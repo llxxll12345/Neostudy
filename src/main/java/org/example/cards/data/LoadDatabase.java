@@ -10,12 +10,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class LoadDatabase {
-    @Bean
-    CommandLineRunner initDatabase(CardRepository repository) {
+    //@Bean
+    /*CommandLineRunner initDatabase(CardRepository repository) {
         Logger logger = LogManager.getLogger(LoadDatabase.class);
         return args -> {
             logger.info("Preloading " + repository.save(new Card("apple", "asdfasdf","a.png")));
             logger.info("Preloading " + repository.save(new Card("pear", "asdf", "b.png")));
         };
-    }
+    }*/
 }

@@ -13,7 +13,7 @@ public class DataController {
     private CardRepository cardRepository;
 
     @GetMapping(path="/add")
-    public @ResponseBody String addNewUser(@RequestParam String name,
+    public @ResponseBody String addNewCard(@RequestParam String name,
                                            @RequestParam String translation,
                                            @RequestParam String link) {
         Card card = new Card(name, translation, link);

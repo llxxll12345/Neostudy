@@ -1,5 +1,6 @@
 package org.example.cards.controller;
 
+import org.example.cards.config.GlobalConfig;
 import org.example.cards.utils.MyTranslator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,8 @@ public class TranslateController {
                                @RequestParam String to) {
         /*/getTrans?text=apple&from=en&ru=to*/
         try {
+            GlobalConfig.setTo(to);
+            GlobalConfig.setFrom(from);
             String result = MyTranslator.translate(text, from, to);
             System.out.println(result);
             return result;
