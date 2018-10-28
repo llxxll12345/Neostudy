@@ -1,20 +1,36 @@
 package org.example.cards.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import javax.activation.FileTypeMap;
+import javax.activation.MimetypesFileTypeMap;
 
 @Controller
 public class GetImgController {
+
+    final String base = "/Users/charlieliu/Documents/codes/springserver/src/main/";
+
     @CrossOrigin
-    @GetMapping(path = "/getImg")
+    @GetMapping(path = "/img", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
-    public String handleImageGet(@RequestParam String filename) {
-        return filename;
+    public ResponseEntity<byte[]> getImage(String name) throws IOException {
+
+        ClassPathResource imgFile = new ClassPathResource("img/" + name);
+        byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(bytes);
     }
 }

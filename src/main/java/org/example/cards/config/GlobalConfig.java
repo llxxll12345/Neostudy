@@ -1,7 +1,7 @@
 package org.example.cards.config;
 
 public class GlobalConfig {
-    private static String from = "en", to = "en";
+    private static String from = "en", to = "es";
 
     public static void setFrom(String f) {
         from = f;

@@ -10,7 +10,7 @@ public class Card {
 
     private String name;
     private String translation;
-    private String link;
+    private String fileLink;
 
     public Card(){
 
@@ -19,7 +19,7 @@ public class Card {
     public Card(String name, String translation, String link) {
         this.name = name;
         this.translation = translation;
-        this.link = link;
+        this.fileLink = link;
     }
 
     @Id
@@ -33,7 +33,7 @@ public class Card {
     }
 
     public void setLink(String link) {
-        this.link = link;
+        this.fileLink = link;
     }
 
     public void setName(String name) {
@@ -41,7 +41,7 @@ public class Card {
     }
 
     public String getLink() {
-        return link;
+        return fileLink;
     }
 
     public String getTranslation() {

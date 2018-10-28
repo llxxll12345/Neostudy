@@ -25,6 +25,7 @@ public class DetectorController {
     private CardRepository cardRepository;
 
     final String base = "/Users/charlieliu/Documents/codes/springserver/src/main/";
+    final String baseUrl = "http://128.61.45.90:8080/img?name=";
 
     @CrossOrigin
     @PostMapping(path = "/detector")
@@ -49,8 +50,9 @@ public class DetectorController {
             }
             String text = results.get(0);
             try {
+                System.out.println("from: " + GlobalConfig.getFrom() + "to: " + GlobalConfig.getTo());
                 String texts = MyTranslator.translate(text, GlobalConfig.getFrom(), GlobalConfig.getTo());
-                cardRepository.save(new Card(text, texts, file.getOriginalFilename()));
+                cardRepository.save(new Card(text, texts, baseUrl + file.getOriginalFilename()));
             } catch (Exception e) {
                 e.printStackTrace();
                 return ResponseEntity.
